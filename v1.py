@@ -4,13 +4,18 @@ import pymongo
 import json
 import numpy as np
 import xlsxwriter
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
+
+api_key = os.getenv("API_KEY")
 
 # Pull in df
 # df = pd.read_csv("Ocean_Daily_Usage_Report_2025-07-15.csv", header = 8)
 df = pd.read_csv("Ocean_Daily_Usage_Report_2026-03-11.csv", header = 8)
 # reference_df = pd.read_excel("paid_pe_usage_report-2025-07-15.xlsx")
-reference_df = pd.read_excel("paid_pe_usage_2026_03_05.xlsx")
+reference_df = pd.read_excel("paid_pe_usage_2026_03_05.xlsx", engine="openpyxl")
 
 # Remove extra rows
 # referral_df = df.iloc[8:len(df)-6].copy()
@@ -74,7 +79,6 @@ merged_df2 = merged_df[~merged_df["Site Name_usage"].str.contains(r"demo|test", 
 ### PART 2: PULL FRESHSALES ACCOUNTS ###
 account_view_ep = "https://cognisantmd2.myfreshworks.com/crm/sales/api/deals/scroll/16002522751"
 
-api_key = "2fTPuq2FUHCInJTfkpvQ8g"
 
 headers = {
     "Authorization" : f"Token token={api_key}",
